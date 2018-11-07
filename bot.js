@@ -4,14 +4,6 @@ const auth = require('./auth.json');
 const scrapeTwitter = require('scrape-twitter');
 const fetch = require('node-fetch');
 const prefix = '_';
-const fs = require('fs');
-// const file = fs.createWriteStream('/pubg-status.file');
-
-// This was with require('discord.io')... 
-  // var bot = new Discord.Client({
-  //   token: auth.token,
-  //   autorun: true
-  // });
 
 bot.on('ready', (e) => {
   console.log(`Logged in as ${bot.user.tag}!`)
@@ -27,10 +19,6 @@ bot.on('message', async message => {
   }
 
   async function getPUBG() {
-    console.log(file)
-    //let response = await scrapeTwitter.getUserProfile('PUBG_help')
-    // let data = await response.json();
-    file.write(new scrapeTwitter.TimelineStream('PUBG_help'))
   }
    
   const args = message.content.slice(prefix.length).split(/ +/);
