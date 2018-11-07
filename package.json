@@ -1,0 +1,22 @@
+{
+  "name": "discordbot-pubgdown",
+  "version": "1.0.0",
+  "description": "bot to alert discord members when PUBG servers go down",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+    "discord.js": "^11.4.2",
+    "fs": "0.0.1-security",
+    "node-fetch": "^2.2.0",
+    "scrape-twitter": "^0.11.1",
+    "snekfetch": "^4.0.4",
+    "winston": "^3.1.0"
+  }
+}
