@@ -1,9 +1,9 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const auth = require('./auth.json');
-const scrapeTwitter = require('scrape-twitter');
 const fetch = require('node-fetch');
 const prefix = '_';
+const scraper = require('./twitterScrape.js');
 
 bot.on('ready', (e) => {
   console.log(`Logged in as ${bot.user.tag}!`)
@@ -11,22 +11,15 @@ bot.on('ready', (e) => {
 
 bot.on('message', async message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
-  
-  async function fetchTwitter() {
-    let response = await fetch('https://aws.random.cat/meow');
-    let data = await response.json()
-    return data;
-  }
-
-  async function getPUBG() {
-  }
    
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
+  let msg = await scraper.scrapeTwitter();
+
     if (command === 'down') {
-      await getPUBG();
-      message.channel.send(fs.readFile('/pubg-status.file'));
+      console.log(msg);
+      message.channel.send(msg);
     }
 
 });
