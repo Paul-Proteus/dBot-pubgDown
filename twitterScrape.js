@@ -1,9 +1,9 @@
 const cheerio = require('cheerio');
 const request = require('request-promise');
+// Just changed request to promise based library -- everything will be broken until refactored
 
-const scrapeTwitter = async () => {
+request('https://twitter.com/pubg_help', (error, response, html) => {
   const parsedResults = [];
-  request('https://twitter.com/pubg_help', (error, response, html) => {
     if (!error && response.statusCode == 200) {
       const $ = cheerio.load(html);
 
@@ -32,9 +32,8 @@ const scrapeTwitter = async () => {
         parsedResults.push(metaData)
       });
     };
+    return parsedResults;
   });
-  return parsedResults;
-};
 
 module.exports = {
   scrapeTwitter
