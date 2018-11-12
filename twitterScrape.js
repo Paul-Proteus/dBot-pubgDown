@@ -1,40 +1,41 @@
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 
-const options = {
-  uri: 'https://twitter.com/pubg_help',
-  transform: function (body, response, resolvedWithFullResponse) {
-    return cheerio.load(body);
-  }
-};
+const scrapeTwitter = () => {
+  const options = {
+    uri: 'https://twitter.com/pubg_help',
+    transform: function (body) {
+      return cheerio.load(body);
+    }
+  };
 
-rp(options)
+  return rp(options)
   .then($ => {
     const parsedResults = [];
 
-    $('.js-stream-item').each((i, element) => {
-      const tweet = $(element).children('.tweet').children('.content');
+      $('.js-stream-item').each((i, element) => {
+        const tweet = $(element).children('.tweet').children('.content');
 
-      const twitterHandle = 'PUBG_help';
-      const tweetText = tweet.children('.js-tweet-text-container').children('p.TweetTextSize').text();
-      const timeStamp = tweet.children('.stream-item-header').children('small.time').children('.tweet-timestamp').text();
-      const twitterLogo = tweet.children('.stream-item-header').children('a.account-group').children('img.avatar').attr('src');
+        const twitterHandle = '@PUBG_help';
+        const tweetText = tweet.children('.js-tweet-text-container').children('p.TweetTextSize').text();
+        const timeStamp = tweet.children('.stream-item-header').children('small.time').children('.tweet-timestamp').text();
+        const twitterLogo = tweet.children('.stream-item-header').children('a.account-group').children('img.avatar').attr('src');
 
-      const metaData = {
-        post: i + 1,
-        twitterHandle: twitterHandle,
-        twitterLogo: twitterLogo,
-        timestamp: timeStamp,
-        tweetText: tweetText
-      };
-      parsedResults.push(metaData)
+        const metaData = {
+          post: i + 1,
+          twitterHandle: twitterHandle,
+          twitterLogo: twitterLogo,
+          timestamp: timeStamp,
+          tweetText: tweetText
+        };
+        parsedResults.push(metaData)
+      })
+      return parsedResults;
     })
-    console.log(parsedResults);
-    return parsedResults;
-  })
-  .catch(err => {
-    console.error('Error Happened...', err);
-  })
+    .catch(err => {
+      console.error('Error Happened...', err);
+    })
+};
 
 module.exports = {
   scrapeTwitter

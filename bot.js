@@ -10,15 +10,19 @@ bot.on('ready', (e) => {
 
 bot.on('message', async message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
-   
+
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
-  let msg = await scraper.scrapeTwitter();
-
-    if (command === 'down') {
-      console.log(msg);
-      message.channel.send(msg);
+  const sendErrorReport = async () => {
+    let msg = await scraper.scrapeTwitter();
+    msg = msg[0];
+    let msgStr = JSON.stringify(msg);    // await console.log(msg[0]);
+    await message.channel.send(msgStr);
+  }
+  
+  if (command === 'down') {
+    await sendErrorReport();
     }
 
 });
