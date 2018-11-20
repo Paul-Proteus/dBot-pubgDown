@@ -1,6 +1,7 @@
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 
+
 const scrapeTwitter = () => {
   const options = {
     uri: 'https://twitter.com/pubg_help',
@@ -10,8 +11,8 @@ const scrapeTwitter = () => {
   };
 
   return rp(options)
-  .then($ => {
-    const parsedResults = [];
+    .then($ => {
+      const parsedResults = [];
 
       $('.js-stream-item').each((i, element) => {
         const tweet = $(element).children('.tweet').children('.content');
@@ -37,6 +38,25 @@ const scrapeTwitter = () => {
     })
 };
 
+scrapeDownDetector = () => {
+  const options = {
+    uri: 'https://downdetector.com/status/playbattlegrounds',
+    transform: function (body) {
+      return cheerio.load(body);
+    }
+  };
+
+  return rp(options)
+    .then($ => {
+      return $('.alert').text();
+    })
+    .catch(err => {
+      console.error('Error Happened...', err);
+    })
+
+};
+
 module.exports = {
-  scrapeTwitter
+  scrapeTwitter,
+  scrapeDownDetector
 };

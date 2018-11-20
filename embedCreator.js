@@ -1,4 +1,4 @@
-const tweets = require('./twitterScrape.js');
+const tweets = require('./util/scrapeUtility.js');
 
 async () => {
   let msg = await scraper.scrapeTwitter();
