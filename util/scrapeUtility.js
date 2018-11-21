@@ -1,7 +1,20 @@
 const cheerio = require('cheerio');
 const rp = require('request-promise');
 
-
+/**
+ * scrapeTwitter() has no parameters. It uses Cheerio to scrape @PUBG_help twitter posts.
+ * @returns {Array} --> Array has objects created out of key information from scraped tweets
+ * @example 
+ * // --> [metaData1, metaData2, metaData3]
+ * metaData = {
+          post: 1,
+          twitterHandle: '@PUBG_help',
+          twitterLogo: 'https://pbs.twimg.com/profile_images/1037799759086477312/w1RbS8PC_bigger.jpg',
+          timestamp: '19 hours ago',
+          tweetText: 'PC Players: Live servers will enter maintenance for 4 hours at Nov 20 4:30pm PST / Nov 21 1:30am CET / Nov 21 9:30am KST'
+        }
+ * 
+ */
 const scrapeTwitter = () => {
   const options = {
     uri: 'https://twitter.com/pubg_help',
@@ -34,10 +47,16 @@ const scrapeTwitter = () => {
       return parsedResults;
     })
     .catch(err => {
-      console.error('Error Happened...', err);
+      console.error(err);
     })
 };
 
+/**
+ * scrapeDownDetector() has no parameters. It uses Cheerio to scrape PUBG data from DownDetector.com 
+ * @returns {String} --> String stating whether PUBG is down or not.
+ * @example 
+ *  --> "No problems at Player Unknown's Battlegrounds"
+ */
 scrapeDownDetector = () => {
   const options = {
     uri: 'https://downdetector.com/status/playbattlegrounds',
@@ -48,10 +67,21 @@ scrapeDownDetector = () => {
 
   return rp(options)
     .then($ => {
-      return $('.alert').text();
+      const parsedResults = [];
+      parsedResults.push($('.alert').text());
+      let re = /{.date.+/gm;
+      let re2 = /'|\\|,+'/gm;
+      let data = $('script')[13].children[0].data.match(re);
+      let dataArray = [];
+      data.forEach(el => {
+        dataArray.push(el.replace(re2,''))
+      });
+      console.log(dataArray);
+
+      return parsedResults;
     })
     .catch(err => {
-      console.error('Error Happened...', err);
+      console.error(err);
     })
 
 };
