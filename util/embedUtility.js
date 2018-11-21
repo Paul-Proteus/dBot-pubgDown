@@ -39,20 +39,29 @@ const buildTwitterEmbed = () => {
 };
 
 const buildDDEmbed = async () => {
+  let emoji = ``;
 
   let ddData = await scrapeDownDetector();
   downDetectorMessage = JSON.stringify(ddData[0]).replace(/(\\n)+(\s+)/gm,'');
-  //console.log('downDetectorMessage ==>', downDetectorMessage)
-  let errorReports = ddData[1];
-  console.log('errorReports ==> ',errorReports)
+  downDetectorReports = ddData[1];
+
+
+  const toggleEmoji = () => {
+    if ( downDetectorMessage === `"No problems at Player Unknown's Battlegrounds"`) {
+      emoji = ':+1:'
+    } else {
+      emoji = `:boom:`;
+    };
+  };
+
+  toggleEmoji();
 
 
   const embed = await new Discord.RichEmbed()
     .setAuthor("DownDetector.com", "https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1488694543/l7ztdetll1eyuj10fdof.png", "https://downdetector.com/status/playbattlegrounds")
     .setTimestamp()
-    .addField(`${downDetectorMessage}`)
-    .addField('Recent Errors Reported', `${errorReports}`, true)
-    .addField('Errors Reported', `yeet`, true)
+    .addField(`${downDetectorMessage}`,`${emoji}`, false)
+    .addField('# of reports in last 2 Hours...', `${downDetectorReports}`)
 
 
     return embed;

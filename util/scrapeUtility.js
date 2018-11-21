@@ -68,16 +68,21 @@ scrapeDownDetector = () => {
   return rp(options)
     .then($ => {
       const parsedResults = [];
-      parsedResults.push($('.alert').text());
-      let re = /{.date.+/gm;
-      let re2 = /'|\\|,+'/gm;
+      let re = /(?:value: )[\d]{1,3}/gm
       let data = $('script')[13].children[0].data.match(re);
-      let dataArray = [];
-      data.forEach(el => {
-        dataArray.push(el.replace(re2,''))
+      
+      let errorData = data.reduce((acc,curr, i) => {
+        if (i >= data.length-8) {
+          curr = curr.replace(/value: /gm, '');
+          curr = Number(curr);
+          return acc + curr
+        } else {
+          return 0
+        }
       });
-      console.log(dataArray);
-
+      parsedResults.push($('.alert').text());
+      parsedResults.push(errorData);
+      
       return parsedResults;
     })
     .catch(err => {
