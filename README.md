@@ -17,7 +17,10 @@
 <table>
 <tbody>
 <tr>
-<td>Server Status</td>
+<td> Server Status </td>
 <td><code>_check</code></td>
+<tr>
+<td> Help </td>
+<td><code>_help or _info</code></td>
 </tbody>
 </table>
