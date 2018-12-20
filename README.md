@@ -3,7 +3,7 @@
 
 [![GitHub license](https://img.shields.io/github/license/Jengas/pubg-discord.svg)](https://github.com/Jengas/pubg-discord/blob/master/LICENSE)
 
-### 'PUBGDOWN!' Does one thing and does it well!
+### Features
 - Tells you if PUBG Servers are down with one simple command.
 - Informs you what BlueHole is doing to fix
 
