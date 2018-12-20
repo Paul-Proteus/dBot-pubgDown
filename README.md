@@ -18,6 +18,6 @@
 <tbody>
 <tr>
 <td>Server Status</td>
-<td><code>_down</code></td>
+<td><code>_check</code></td>
 </tbody>
 </table>

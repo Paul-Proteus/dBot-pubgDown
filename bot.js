@@ -24,7 +24,7 @@ bot.on('message', async message => {
     await message.channel.send(twitterEmbed);
   }
   
-  if (command === 'down') {
+  if (command === 'check') {
     await sendReport();
     }
 
