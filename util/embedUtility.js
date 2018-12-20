@@ -59,7 +59,7 @@ const buildDDEmbed = async () => {
   const downDetectorEmbed = await new Discord.RichEmbed()
     .setAuthor("DownDetector.com", "https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1488694543/l7ztdetll1eyuj10fdof.png", "https://downdetector.com/status/playbattlegrounds")
     .setColor(lineColor)
-    .addField(`${downDetectorMessage}`,`lol`, false)
+    .addField(`${downDetectorMessage}`,`---`, false)
     .addField('# of down reports in last 2 Hours...', `${downDetectorReports}-->(fewer than 50 is generally a good sign)`, true)
     .setThumbnail(`${emoji}`)
     return downDetectorEmbed;
