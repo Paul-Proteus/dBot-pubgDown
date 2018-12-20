@@ -39,7 +39,7 @@ bot.on('message', async message => {
   };
   
   if (command === 'help' || command === 'info') {
-    message.channel.send('```My prefix is _\n\nI only do one thing and I do it well...\n\n _check : Check if servers are down\n\n_help: This is the help screen (lol)``` ')
+    message.channel.send('```My prefix is _\n\nI only do one thing and I do it well...\n\n_check : Check if servers are down\n\n_help: This is the help screen (lol)``` ')
   };
 
 });
