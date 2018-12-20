@@ -32,8 +32,16 @@ const scrapeTwitter = () => {
 
         const twitterHandle = '@PUBG_help';
         const tweetText = tweet.children('.js-tweet-text-container').children('p.TweetTextSize').text();
-        const timeStamp = tweet.children('.stream-item-header').children('small.time').children('.tweet-timestamp').text();
+        let timeStamp = tweet.children('.stream-item-header').children('small.time').children('.tweet-timestamp').text();
         const twitterLogo = tweet.children('.stream-item-header').children('a.account-group').children('img.avatar').attr('src');
+
+        
+        // removes the duplicate hour from the twitter timestamp
+        if (timeStamp.length > 10) {
+          let re = /(?:h)[\d]{1,3}/gm;
+          timeStamp = timeStamp.replace(re,'');
+        }
+        console.log('tweet -->', tweet);
 
         const metaData = {
           post: i + 1,
@@ -82,7 +90,7 @@ scrapeDownDetector = () => {
       });
       parsedResults.push($('.alert').text());
       parsedResults.push(errorData);
-      
+
       return parsedResults;
     })
     .catch(err => {

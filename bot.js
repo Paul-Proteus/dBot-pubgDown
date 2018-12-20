@@ -3,9 +3,7 @@ const bot = new Discord.Client();
 const auth = require('./auth.json');
 const prefix = '_';
 const { scrapeDownDetector, scrapeTwitter } = require('./util/scrapeUtility.js');
-const { buildDDEmbed } = require('./util/embedUtility.js');
-
-
+const { buildDDEmbed, buildTwitterEmbed } = require('./util/embedUtility.js');
 
 bot.on('ready', (e) => {
   console.log(`Logged in as ${bot.user.tag}!`)
@@ -17,21 +15,15 @@ bot.on('message', async message => {
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 
-  const sendErrorReport = async () => {
-    //let twitter = await scrapeTwitter();
-    //let downDetector = await scrapeDownDetector();
-
-    //msg = twitter[0];
+  const sendReport = async () => {
     ddEmbed = await buildDDEmbed();
-    //msg2 = JSON.stringify(downDetector).replace(/(\\n)+(\s+)/gm,'');
-    //let msgStr = JSON.stringify(msg);    // await console.log(msg[0]);
+    twitterEmbed = await buildTwitterEmbed();
     await message.channel.send(ddEmbed);
-    //await message.channel.send(msg2);
-
+    await message.channel.send(twitterEmbed);
   }
   
   if (command === 'down') {
-    await sendErrorReport();
+    await sendReport();
     }
 
 });

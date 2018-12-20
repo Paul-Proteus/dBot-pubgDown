@@ -1,41 +1,35 @@
-const {
-  scrapeDownDetector,
-  scrapeTwitter
-} = require('./scrapeUtility.js');
+const { scrapeDownDetector, scrapeTwitter } = require('./scrapeUtility.js');
 const Discord = require('discord.js');
+let lineColor;
+
+const buildTwitterEmbed = async () => {
+
+  let twitterData = await scrapeTwitter();
+  console.log('TWITTER DATA --> ', twitterData[0]['timestamp'])
+  console.log('TWITTER DATA --> ', twitterData[0]['tweetText'])
 
 
+  let tweet1 = twitterData[0]['tweetText'].slice(0,256);
+  let timestamp1 = twitterData[0]['timestamp'];
+  let tweet2 = twitterData[1]['tweetText'].slice(0,256);
+  let timestamp2 = twitterData[1]['timestamp'];
+  let tweet3 = twitterData[2]['tweetText'].slice(0,256);
+  let timestamp3 = twitterData[2]['timestamp'];
+  
 
-const buildTwitterEmbed = () => {
-
-  const embed = new Discord.RichEmbed()
-    .setTitle("This is your title, it can hold 256 characters")
-    .setAuthor("Author Name", "https://i.imgur.com/lm8s41J.png")
-    /*
-     * Alternatively, use "#00AE86", [0, 174, 134] or an integer number.
-     */
-    .setColor(0x00AE86)
-    .setDescription("This is the main body of text, it can hold 2048 characters.")
-    .setFooter("This is the footer text, it can hold 2048 characters", "http://i.imgur.com/w1vhFSR.png")
-    .setImage("http://i.imgur.com/yVpymuV.png")
-    .setThumbnail("http://i.imgur.com/p2qNFag.png")
-    /*
-     * Takes a Date object, defaults to current date.
-     */
+  const twitterEmbed = new Discord.RichEmbed()
+    .setAuthor("@PUBG_help", "https://pbs.twimg.com/profile_images/1037799759086477312/w1RbS8PC_bigger.jpg", "https://twitter.com/pubg_help?lang=en")
+    .setColor(lineColor)
+    .setFooter("PUBG DOWN! Created with love by JonnyRav3n", )
     .setTimestamp()
-    .setURL("https://discord.js.org/#/docs/main/indev/class/RichEmbed")
-    .addField("This is a field title, it can hold 256 characters",
-      "This is a field value, it can hold 1024 characters.")
-    /*
-     * Inline fields may not display as inline if the thumbnail and/or image is too big.
-     */
-    .addField("Inline Field", "They can also be inline.", true)
-    /*
-     * Blank field, useful to create some space.
-     */
-    .addBlankField(true)
-    .addField("Inline Field 3", "You can have a maximum of 25 fields.", true);
+    .addField(timestamp1, tweet1, true)
+    .addBlankField()
+    .addField(timestamp2, tweet2 ,true )
+    .addBlankField()
+    .addField(timestamp3,tweet3, true)
+    .setTimestamp()
 
+    return twitterEmbed;
 };
 
 const buildDDEmbed = async () => {
@@ -48,25 +42,26 @@ const buildDDEmbed = async () => {
 
   const toggleEmoji = () => {
     if ( downDetectorMessage === `"No problems at Player Unknown's Battlegrounds"`) {
-      emoji = ':+1:'
+      emoji = 'https://www.emoji.co.uk/files/apple-emojis/smileys-people-ios/95-ok-hand-sign.png'
+      lineColor = 0x00AE86;
     } else {
-      emoji = `:boom:`;
+      emoji = `https://www.emoji.co.uk/files/apple-emojis/smileys-people-ios/92-thumbs-down-sign.png`;
+      lineColor = '#ff0000' 
     };
   };
 
   toggleEmoji();
 
-
-  const embed = await new Discord.RichEmbed()
+  const downDetectorEmbed = await new Discord.RichEmbed()
     .setAuthor("DownDetector.com", "https://res-1.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_256,w_256,f_auto,q_auto:eco/v1488694543/l7ztdetll1eyuj10fdof.png", "https://downdetector.com/status/playbattlegrounds")
-    .setTimestamp()
-    .addField(`${downDetectorMessage}`,`${emoji}`, false)
-    .addField('# of reports in last 2 Hours...', `${downDetectorReports}`)
-
-
-    return embed;
+    .setColor(lineColor)
+    .addField(`${downDetectorMessage}`,`lol`, false)
+    .addField('# of down reports in last 2 Hours...', `${downDetectorReports}-->(fewer than 50 is generally a good sign)`, true)
+    .setThumbnail(`${emoji}`)
+    return downDetectorEmbed;
 };
 
 module.exports = {
-  buildDDEmbed
+  buildDDEmbed,
+  buildTwitterEmbed
 }
