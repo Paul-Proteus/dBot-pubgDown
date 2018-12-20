@@ -1,7 +1,5 @@
-# PUBGDOWN! bot
+# PUBGDOWN! Discord bot
 **PUBG Bot** for **Discord** servers.
-
-[![GitHub license](https://img.shields.io/github/license/Jengas/pubg-discord.svg)](https://github.com/Jengas/pubg-discord/blob/master/LICENSE)
 
 ### Features
 - Tells you if PUBG Servers are down with one simple command.
@@ -11,7 +9,7 @@
 <table>
 <tbody>
 <tr>
-<td>Find out if PUBG servers are down</td>
+<td>Server Status</td>
 <td><code>_down</code></td>
 </tbody>
 </table>

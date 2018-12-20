@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const auth = require('./auth.json');
 const prefix = '_';
-const { scrapeDownDetector, scrapeTwitter } = require('./util/scrapeUtility.js');
 const { buildDDEmbed, buildTwitterEmbed } = require('./util/embedUtility.js');
 
 bot.on('ready', (e) => {
@@ -10,8 +9,11 @@ bot.on('ready', (e) => {
 });
 
 bot.on('message', async message => {
+  
+  // Ignore bots and messages that don't start with prefix
   if (!message.content.startsWith(prefix) || message.author.bot) return;
 
+  // Our standard argument/command name definition.
   const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
 

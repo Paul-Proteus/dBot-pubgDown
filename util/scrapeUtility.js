@@ -4,8 +4,7 @@ const rp = require('request-promise');
 /**
  * scrapeTwitter() has no parameters. It uses Cheerio to scrape @PUBG_help twitter posts.
  * @returns {Array} --> Array has objects created out of key information from scraped tweets
- * @example 
- * // --> [metaData1, metaData2, metaData3]
+ * @example --> [metaData1, metaData2, metaData3]
  * metaData = {
           post: 1,
           twitterHandle: '@PUBG_help',
@@ -41,8 +40,7 @@ const scrapeTwitter = () => {
           let re = /(?:h)[\d]{1,3}/gm;
           timeStamp = timeStamp.replace(re,'');
         }
-        console.log('tweet -->', tweet);
-
+        
         const metaData = {
           post: i + 1,
           twitterHandle: twitterHandle,

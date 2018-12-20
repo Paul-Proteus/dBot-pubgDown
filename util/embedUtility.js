@@ -2,13 +2,14 @@ const { scrapeDownDetector, scrapeTwitter } = require('./scrapeUtility.js');
 const Discord = require('discord.js');
 let lineColor;
 
+/**
+ *  Builds out the Twitter embed object that is presented on Discord.
+ */
 const buildTwitterEmbed = async () => {
 
   let twitterData = await scrapeTwitter();
-  console.log('TWITTER DATA --> ', twitterData[0]['timestamp'])
-  console.log('TWITTER DATA --> ', twitterData[0]['tweetText'])
 
-
+  // Generate information object for first 3 tweets from @PUBG_help
   let tweet1 = twitterData[0]['tweetText'].slice(0,256);
   let timestamp1 = twitterData[0]['timestamp'];
   let tweet2 = twitterData[1]['tweetText'].slice(0,256);
@@ -32,6 +33,9 @@ const buildTwitterEmbed = async () => {
     return twitterEmbed;
 };
 
+/**
+ *  Builds out the DownDetector embed object that is presented on Discord.
+ */
 const buildDDEmbed = async () => {
   let emoji = ``;
 
@@ -39,7 +43,7 @@ const buildDDEmbed = async () => {
   downDetectorMessage = JSON.stringify(ddData[0]).replace(/(\\n)+(\s+)/gm,'');
   downDetectorReports = ddData[1];
 
-
+  // Colors and Emoji toggle based on server status
   const toggleEmoji = () => {
     if ( downDetectorMessage === `"No problems at Player Unknown's Battlegrounds"`) {
       emoji = 'https://www.emoji.co.uk/files/apple-emojis/smileys-people-ios/95-ok-hand-sign.png'
